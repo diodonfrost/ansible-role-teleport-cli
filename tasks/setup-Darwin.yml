@@ -1,0 +1,56 @@
+---
+# tasks file for install teleport on Darwin system
+
+- name: Darwin | Get the latest published full release for the repository
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/gravitational/teleport/releases/latest
+    return_content: yes
+  register: teleport_index
+  check_mode: no
+  when: teleport_version == "latest"
+
+- name: Darwin | Filter the latest teleport version
+  ansible.builtin.set_fact:
+    teleport_version_to_install: "{{ (teleport_index.content | from_json).name | replace('Teleport ', '') }}"
+  when: teleport_version == 'latest'
+
+- name: Darwin | Use the specified teleport version when latest var is not define
+  ansible.builtin.set_fact:
+    teleport_version_to_install: "{{ teleport_version }}"
+  when: teleport_version != 'latest'
+
+# This task avoids downloading teleport every time
+- name: Darwin | Check if teleport is present with the right version
+  ansible.builtin.command: "{{ teleport_bin_directory }}/teleport version"
+  register: teleport_installed_version
+  ignore_errors: true
+  changed_when: false
+  failed_when: false
+
+- name: Darwin | Download Teleport archive file
+  ansible.builtin.unarchive:
+    src: "{{ teleport_pkg_url }}"
+    dest: "{{ teleport_tmp_directory }}"
+    remote_src: yes
+  when: teleport_version_to_install not in teleport_installed_version.stdout
+
+- name: Darwin | Install Teleport cli
+  ansible.builtin.copy:
+    src: "{{ teleport_tmp_directory }}/teleport/{{ item }}"
+    dest: "{{ teleport_bin_directory }}/{{ item }}"
+    remote_src: true
+    mode: 0755
+  when: teleport_version_to_install not in teleport_installed_version.stdout
+  loop:
+    - teleport
+    - tsh
+    - tctl
+    - tbot
+
+- name: Darwin | Delete teleport tmp archive files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - "{{ teleport_tmp_directory }}/teleport"
+    - "{{ teleport_tmp_directory }}/teleport-{{ teleport_version_to_install }}-darwin-amd64-bin.tar.gz"
