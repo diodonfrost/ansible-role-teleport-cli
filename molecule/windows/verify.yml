@@ -1,0 +1,13 @@
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Windows | tsh cli should be functionnal
+      ansible.builtin.win_command: tsh version
+      register: tsh_result
+
+    - name: Windows | Verify win_commands outputs
+      ansible.builtin.assert:
+        that:
+          - tsh_result.rc == 0
+        success_msg: "All tests passed"

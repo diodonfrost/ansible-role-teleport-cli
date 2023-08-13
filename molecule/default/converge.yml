@@ -1,0 +1,9 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include ansible-role-teleport-cli"
+      ansible.builtin.include_role:
+        name: "ansible-role-teleport-cli"
+      vars:
+        teleport_version: "{{ lookup('env', 'teleport_version') | default('latest', true) }}"
