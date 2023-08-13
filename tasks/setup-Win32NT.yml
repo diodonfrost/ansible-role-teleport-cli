@@ -1,0 +1,38 @@
+---
+# tasks file for install teleport on Windows system
+
+- name: Windows | Get the latest published full release for the repository
+  ansible.windows.win_uri:
+    url: https://api.github.com/repos/gravitational/teleport/releases/latest
+    return_content: yes
+    headers:
+      user-agent: Mozilla/5.0
+  register: teleport_index
+  check_mode: no
+  when: teleport_version == "latest"
+
+- name: Windows | Filter the latest teleport version
+  ansible.builtin.set_fact:
+    teleport_version_to_install: "{{ (teleport_index.content | from_json).name | replace('Teleport ', '') }}"
+  when: teleport_version == 'latest'
+
+- name: Windows | Use the specified teleport version when latest var is not define
+  ansible.builtin.set_fact:
+    teleport_version_to_install: "{{ teleport_version }}"
+  when: teleport_version != 'latest'
+
+- name: Windows | Download telelport cli
+  ansible.windows.win_get_url:
+    url: "{{ teleport_pkg_url }}"
+    dest: "{{ teleport_tmp_directory }}"
+
+- name: Windows | Extract telelport cli
+  community.windows.win_unzip:
+    src: "{{ teleport_tmp_directory }}\\teleport-v{{ teleport_version_to_install }}-windows-amd64-bin.zip"
+    dest: "{{ teleport_tmp_directory }}"
+
+- name: Windows | Install teleport cli
+  ansible.windows.win_copy:
+    src: "{{ teleport_tmp_directory }}\\teleport\\tsh.exe"
+    dest: "{{ teleport_bin_directory }}\\tsh.exe"
+    remote_src: true
