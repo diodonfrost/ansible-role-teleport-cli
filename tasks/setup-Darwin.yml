@@ -26,6 +26,7 @@
   ignore_errors: true
   changed_when: false
   failed_when: false
+  check_mode: no
 
 - name: Darwin | Download Teleport archive file
   ansible.builtin.unarchive:
@@ -49,8 +50,5 @@
 
 - name: Darwin | Delete teleport tmp archive files
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: "{{ teleport_tmp_directory }}/teleport"
     state: absent
-  loop:
-    - "{{ teleport_tmp_directory }}/teleport"
-    - "{{ teleport_tmp_directory }}/teleport-{{ teleport_version_to_install }}-darwin-amd64-bin.tar.gz"
