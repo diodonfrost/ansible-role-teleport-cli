@@ -1,0 +1,8 @@
+---
+# tasks file for ansible-role-teleport-cli
+
+- name: Include OS specific variables.
+  ansible.builtin.include_vars: "{{ ansible_facts['system'] }}.yml"
+
+- name: Install teleport cli
+  ansible.builtin.include_tasks: "setup-{{ ansible_facts['system'] }}.yml"

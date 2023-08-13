@@ -1,0 +1,62 @@
+galaxy_info:
+  role_name: teleport_cli
+  author: diodonfrost
+  company: diodonfrost
+  description: Ansible role for install the latest version of teleport_cli
+  license: license Apache
+
+  min_ansible_version: 2.9.0
+
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - buster
+        - stretch
+        - jessie
+        - wheezy
+        - squeeze
+    - name: Ubuntu
+      versions:
+        - bionic
+        - xenial
+        - trusty
+    - name: Amazon Linux
+      versions:
+        - all
+    - name: opensuse
+      versions:
+        - all
+    - name: ArchLinux
+      versions:
+        - all
+    - name: Alpine
+      versions:
+        - all
+    - name: Gentoo
+      versions:
+        - all
+    - name: ClearLinux
+      versions:
+        - all
+    - name: MacOSX
+      versions:
+        - all
+    - name: Windows
+      versions:
+        - all
+
+  galaxy_tags:
+    - system
+    - packaging
+    - cloud
+    - teleport
+    - security
+    - bastion
+
+dependencies: []

@@ -1,0 +1,4 @@
+---
+default_teleport_pkg_url: https://cdn.teleport.dev/teleport-v{{ teleport_version_to_install }}-linux-amd64-bin.tar.gz
+default_teleport_bin_directory: /usr/local/bin
+default_teleport_tmp_directory: /tmp
