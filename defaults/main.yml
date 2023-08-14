@@ -13,12 +13,12 @@ teleport_bin_install: false
 
 # Define where to download teleport package url
 # Default: use local system path defined in Ansible vars/*.yml
-teleport_pkg_url: "{{ default_teleport_pkg_url }}"
+teleport_pkg_url: "{{ __teleport_pkg_url }}"
 
 # Define where to install teleport binary
 # Default: use local system path defined in Ansible vars/*.yml
-teleport_bin_directory: "{{ default_teleport_bin_directory }}"
+teleport_bin_directory: "{{ __teleport_bin_directory }}"
 
 # Define where to download teleport archive
 # Default: use tmp system path defined in Ansible vars/*.yml
-teleport_tmp_directory: "{{ default_teleport_tmp_directory }}"
+teleport_tmp_directory: "{{ __teleport_tmp_directory }}"

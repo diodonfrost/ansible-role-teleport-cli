@@ -3,7 +3,7 @@
   hosts: all
   tasks:
     - name: Windows | tsh cli should be functionnal
-      ansible.builtin.win_command: tsh version
+      ansible.windows.win_command: tsh version
       register: tsh_result
 
     - name: Windows | Verify win_commands outputs
