@@ -33,6 +33,7 @@
     src: "{{ teleport_pkg_url }}"
     dest: "{{ teleport_tmp_directory }}"
     remote_src: yes
+  notify: Linux | Delete teleport tmp archive extracted files
   when: teleport_version_to_install not in teleport_installed_version.stdout
 
 - name: Linux | Install Teleport cli
@@ -47,8 +48,3 @@
     - tsh
     - tctl
     - tbot
-
-- name: Linux | Delete teleport tmp archive files
-  ansible.builtin.file:
-    path: "{{ teleport_tmp_directory }}/teleport"
-    state: absent

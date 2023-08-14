@@ -1,4 +1,17 @@
 ---
-default_teleport_pkg_url: https://cdn.teleport.dev/teleport-v{{ teleport_version_to_install }}-linux-amd64-bin.tar.gz
+default_teleport_bin_install: '{%- if not teleport_bin_install and (ansible_facts["pkg_mgr"] == "apt" or ansible_facts["pkg_mgr"] == "dnf") -%}
+                                  True
+                               {%- else -%}
+                                  False
+                               {%- endif -%}'
+
+default_teleport_pkg_url: '{%- if default_teleport_bin_install == False -%}
+                              https://cdn.teleport.dev/teleport-v{{ teleport_version_to_install }}-linux-amd64-bin.tar.gz
+                           {%- elif ansible_facts["pkg_mgr"] == "apt" -%}
+                              https://cdn.teleport.dev/teleport_{{ teleport_version_to_install }}_amd64.deb
+                           {%- elif ansible_facts["pkg_mgr"] == "dnf" -%}
+                              https://cdn.teleport.dev/teleport-{{ teleport_version_to_install }}-1.x86_64.rpm
+                           {%- endif -%}'
+
 default_teleport_bin_directory: /usr/local/bin
 default_teleport_tmp_directory: /tmp

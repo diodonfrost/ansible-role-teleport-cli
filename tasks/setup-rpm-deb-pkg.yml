@@ -1,0 +1,31 @@
+---
+- name: Linux | Get the latest published full release for the repository
+  ansible.builtin.uri:
+    url: https://api.github.com/repos/gravitational/teleport/releases/latest
+    return_content: yes
+  register: teleport_index
+  check_mode: no
+  when: teleport_version == "latest"
+
+- name: Linux | Filter the latest teleport version
+  ansible.builtin.set_fact:
+    teleport_version_to_install: "{{ (teleport_index.content | from_json).name | replace('Teleport ', '') }}"
+  when: teleport_version == 'latest'
+
+- name: Linux | Use the specified teleport version when latest var is not define
+  ansible.builtin.set_fact:
+    teleport_version_to_install: "{{ teleport_version }}"
+  when: teleport_version != 'latest'
+
+- name: Debian/Ubuntu | install teleport cli
+  ansible.builtin.apt:
+    deb: "{{ teleport_pkg_url }}"
+    state: present
+  when: ansible_facts['pkg_mgr'] == "apt"
+
+- name: RedHat/Fedora | install teleport cli
+  ansible.builtin.dnf:
+    name: "{{ teleport_pkg_url }}"
+    disable_gpg_check: true
+    state: present
+  when: ansible_facts['pkg_mgr'] == "dnf"

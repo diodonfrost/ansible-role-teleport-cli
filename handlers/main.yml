@@ -1,2 +1,6 @@
 ---
 # handlers file for teleport_cli
+- name: Linux | Delete teleport tmp archive extracted files
+  ansible.builtin.file:
+    path: "{{ teleport_tmp_directory }}/teleport"
+    state: absent

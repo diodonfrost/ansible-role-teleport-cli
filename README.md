@@ -20,10 +20,15 @@ This role has multiple variables. The defaults for all these variables are the f
 ---
 # defaults file for teleport_cli
 
-# Define teleport version to install (example: 13.3.2)
-# Possible values: https://api.github.com/repos/gravitational/teleport/releases
+# Define teleport version to install
+# Possible values: latest or specific teleport version (example: 13.3.2)
 # Default: latest
 teleport_version: latest
+
+# Define if teleport package is installed with binary or package manager (deb/rpm)
+# If teleport package .deb or .rpm is not supported by os, binary will still be installed
+# Possible valies: true or false
+teleport_bin_install: false
 
 # Define where to download teleport package url
 # Default: use local system path defined in Ansible vars/*.yml

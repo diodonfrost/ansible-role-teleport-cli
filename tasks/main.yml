@@ -4,5 +4,10 @@
 - name: Include OS specific variables.
   ansible.builtin.include_vars: "{{ ansible_facts['system'] }}.yml"
 
-- name: Install teleport cli
+- name: Install teleport cli with .deb or .rpm
+  ansible.builtin.include_tasks: "setup-rpm-deb-pkg.yml"
+  when: default_teleport_bin_install | bool
+
+- name: Install teleport cli bin
   ansible.builtin.include_tasks: "setup-{{ ansible_facts['system'] }}.yml"
+  when: not default_teleport_bin_install | bool
