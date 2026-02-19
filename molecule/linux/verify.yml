@@ -5,18 +5,22 @@
     - name: Linux | teleport cli should be functionnal
       ansible.builtin.command: teleport version
       register: teleport_result
+      changed_when: false
 
     - name: Linux | tsh cli should be functionnal
       ansible.builtin.command: tsh version
       register: tsh_result
+      changed_when: false
 
     - name: Linux | tctl cli should be functionnal
       ansible.builtin.command: tctl version
       register: tctl_result
+      changed_when: false
 
     - name: Linux | tbot cli should be functionnal
       ansible.builtin.command: tbot version
       register: tbot_result
+      changed_when: false
 
     - name: Linux | Verify commands outputs
       ansible.builtin.assert:

@@ -5,6 +5,7 @@
     - name: Windows | tsh cli should be functionnal
       ansible.windows.win_command: tsh version
       register: tsh_result
+      changed_when: false
 
     - name: Windows | Verify win_commands outputs
       ansible.builtin.assert:
