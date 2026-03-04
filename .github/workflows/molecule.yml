@@ -11,7 +11,7 @@ jobs:
     name: ${{ matrix.image }} teleport ${{ matrix.teleport_version }}
     runs-on: ubuntu-latest
     env:
-      docker_namepsace: ghcr.io/diodonfrost/docker-ansible
+      docker_namepsace: ghcr.io/diodonfrost
     strategy:
       fail-fast: false
       matrix:
