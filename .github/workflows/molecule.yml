@@ -11,7 +11,7 @@ jobs:
     name: ${{ matrix.image }} teleport ${{ matrix.teleport_version }}
     runs-on: ubuntu-latest
     env:
-      docker_namepsace: ghcr.io/diodonfrost
+      docker_namespace: ghcr.io/diodonfrost
     strategy:
       fail-fast: false
       matrix:
@@ -48,13 +48,13 @@ jobs:
       - name: Test Ansible role
         run: molecule test
         env:
-          namespace: ${{ env.docker_namepsace }}
+          namespace: ${{ env.docker_namespace }}
           image: ansible-${{ matrix.image }}
           teleport_version: ${{ matrix.teleport_version }}
 
       - name: Test Ansible role with check_mode enable
         run: molecule check
         env:
-          namespace: ${{ env.docker_namepsace }}
+          namespace: ${{ env.docker_namespace }}
           image: ansible-${{ matrix.image }}
           teleport_version: ${{ matrix.teleport_version }}
