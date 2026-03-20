@@ -1,4 +1,4 @@
 ---
-__teleport_pkg_url: https://cdn.teleport.dev/teleport-v{{ teleport_version_to_install }}-darwin-amd64-bin.tar.gz
-__teleport_bin_directory: /usr/local/bin
-__teleport_tmp_directory: /tmp
+_teleport_pkg_url: https://cdn.teleport.dev/teleport-v{{ teleport_version_to_install }}-darwin-amd64-bin.tar.gz
+_teleport_bin_directory: /usr/local/bin
+_teleport_tmp_directory: /tmp

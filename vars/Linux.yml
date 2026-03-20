@@ -1,11 +1,11 @@
 ---
-__teleport_bin_install: '{%- if not teleport_bin_install and (ansible_facts["pkg_mgr"] == "apt" or ansible_facts["pkg_mgr"] == "dnf") -%}
+_teleport_bin_install: '{%- if not teleport_bin_install and (ansible_facts["pkg_mgr"] == "apt" or ansible_facts["pkg_mgr"] == "dnf") -%}
                             True
                          {%- else -%}
                             False
                          {%- endif -%}'
 
-__teleport_pkg_url: '{%- if __teleport_bin_install == False -%}
+_teleport_pkg_url: '{%- if _teleport_bin_install == False -%}
                         https://cdn.teleport.dev/teleport-v{{ teleport_version_to_install }}-linux-amd64-bin.tar.gz
                      {%- elif ansible_facts["pkg_mgr"] == "apt" -%}
                         https://cdn.teleport.dev/teleport_{{ teleport_version_to_install }}_amd64.deb
@@ -13,5 +13,5 @@ __teleport_pkg_url: '{%- if __teleport_bin_install == False -%}
                         https://cdn.teleport.dev/teleport-{{ teleport_version_to_install }}-1.x86_64.rpm
                      {%- endif -%}'
 
-__teleport_bin_directory: /usr/local/bin
-__teleport_tmp_directory: /tmp
+_teleport_bin_directory: /usr/local/bin
+_teleport_tmp_directory: /tmp
